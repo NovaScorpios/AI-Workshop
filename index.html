@@ -352,6 +352,91 @@
             border-color: #ff0000;
         }
 
+        /* Vader Timeline Styles */
+        .vader-timeline {
+            background: linear-gradient(135deg, rgba(50, 0, 0, 0.2), rgba(100, 0, 0, 0.2)); /* Dark redish gradient */
+            border-color: #ff0000; /* Red border */
+        }
+
+        .timeline-container-vader {
+            position: relative;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+
+        .timeline-container-vader::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #ff0000; /* Red timeline bar */
+            transform: translateX(-50%);
+        }
+
+        .timeline-event-vader {
+            padding: 20px 40px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 30px;
+            width: 45%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+        }
+
+        .timeline-event-vader:nth-child(odd) {
+            left: 0;
+            text-align: right; /* Align text to the right for odd children */
+        }
+
+        .timeline-event-vader:nth-child(even) {
+            left: 55%; /* Position even children to the right of the timeline bar */
+        }
+
+        .timeline-event-vader::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #ffffff; /* White marker */
+            border: 3px solid #ff0000; /* Red border for marker */
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .timeline-event-vader:nth-child(odd)::after {
+            right: -28px; /* Adjust to align with the central line */
+            transform: translate(50%, -50%);
+        }
+
+        .timeline-event-vader:nth-child(even)::after {
+            left: -28px; /* Adjust to align with the central line */
+            transform: translate(-50%, -50%);
+        }
+
+        .timeline-event-vader h3 {
+            color: #ff6b6b; /* Light red for titles */
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .timeline-event-vader p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #f0f0f0; /* Lighter text for readability */
+        }
+
+        .timeline-event-vader:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.3); /* More pronounced red glow on hover */
+            border-color: #ff3333;
+        }
+
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2.5rem;
@@ -361,8 +446,30 @@
                 grid-template-columns: 1fr;
             }
             
-            .timeline-item {
+            .timeline-item { /* Existing timeline */
                 width: 100%;
+            }
+
+            /* Responsive Vader Timeline */
+            .timeline-container-vader::before {
+                left: 20px; /* Move line to the left */
+                transform: translateX(0);
+            }
+
+            .timeline-event-vader,
+            .timeline-event-vader:nth-child(even) {
+                width: calc(100% - 70px); /* Adjust width for left alignment, allowing for padding */
+                left: 40px; /* Position all items to the right of the line */
+                text-align: left; /* Align all text to left */
+                /* margin-left: 20px; Removed as it's redundant with 'left' positioning */
+                padding-left: 30px; /* Ensure content is clear of the marker */
+            }
+
+            .timeline-event-vader:nth-child(odd)::after,
+            .timeline-event-vader:nth-child(even)::after {
+                left: -28px; /* Align all markers to the line on the left */
+                transform: translate(-50%, -50%);
+                right: auto;
             }
         }
     </style>
@@ -539,6 +646,104 @@
                     <h4>Revan</h4>
                     <p>Sith Lord to Jedi</p>
                     <span class="vote-count" id="revan-votes">0 votes</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Darth Vader's Journey Timeline -->
+        <section class="section vader-timeline" id="vader-journey">
+            <h2 class="section-title">Darth Vader's Journey: A Timeline</h2>
+            <div class="timeline-container-vader">
+                <!-- The Rise of Anakin Skywalker -->
+                <div class="timeline-event-vader">
+                    <h3>Early Life: Discovery on Tatooine</h3>
+                    <p>Born into slavery on Tatooine, young Anakin Skywalker is discovered by Jedi Master Qui-Gon Jinn, who believes him to be the prophesied "Chosen One" destined to bring balance to the Force. (Episode I)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>Jedi Path: Padawan to Obi-Wan</h3>
+                    <p>Following Qui-Gon's tragic death, Anakin is taken under the wing of Obi-Wan Kenobi, becoming his Padawan learner and beginning his training in the Jedi arts. (Episode I)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>Forbidden Love: Secret Marriage to Padmé</h3>
+                    <p>Years later, Anakin reconnects with Padmé Amidala. Their deepening bond leads to a secret marriage, a serious violation of the Jedi Code which forbids such attachments. (Episode II)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>Clone Wars Hero: "The Hero With No Fear"</h3>
+                    <p>Anakin rises as a celebrated general and a symbol of hope for the Republic during the galaxy-spanning Clone Wars, earning the moniker "The Hero With No Fear" for his bravery and unorthodox tactics. (Clone Wars series, Episode III opening)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>Dark Premonitions: Visions of Padmé's Death</h3>
+                    <p>Anakin is tormented by powerful visions of his beloved Padmé dying in childbirth. His fear of this future becomes a driving force in his subsequent actions. (Episode III)</p>
+                </div>
+
+                <!-- The Fall to the Dark Side -->
+                <div class="timeline-event-vader">
+                    <h3>Manipulation: Palpatine's Seduction</h3>
+                    <p>Chancellor Palpatine, secretly the Sith Lord Darth Sidious, preys on Anakin's fears, promising him the dark side knowledge needed to save Padmé from her foreseen fate. (Episode III)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>Point of No Return: Betrayal of the Jedi</h3>
+                    <p>Desperate to save Padmé, Anakin makes a fateful choice, aiding Palpatine in the defeat of Jedi Master Mace Windu and pledging himself to the Sith, thus becoming Darth Vader. (Episode III)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>The Great Jedi Purge: Order 66</h3>
+                    <p>As Darth Vader, he leads the devastating assault on the Jedi Temple, a key part of Order 66, which aims to exterminate all Jedi across the galaxy, including the younglings. (Episode III)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>Birth of a Monster: Mustafar Duel & Transformation</h3>
+                    <p>On the volcanic world of Mustafar, Vader confronts Obi-Wan. The brutal duel ends with Vader dismembered and horrifically burned. He is subsequently encased in his life-sustaining black cybernetic suit. (Episode III)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>Final Push to Darkness: Padmé's Fate</h3>
+                    <p>Palpatine deceives Vader, telling him that his own anger and actions caused Padmé's death. This lie shatters any remaining hope and fully cements Vader's descent into the dark side. (Episode III)</p>
+                </div>
+
+                <!-- Reign of Darth Vader -->
+                <div class="timeline-event-vader">
+                    <h3>Emperor's Fist: Hunting Jedi Survivors</h3>
+                    <p>For nearly two decades, Darth Vader serves as Emperor Palpatine's ruthless enforcer, hunting down and eliminating any Jedi who survived Order 66. (Obi-Wan Kenobi series, Rebels series, Jedi: Fallen Order/Survivor games)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>A Ghost from the Past: Confrontation with Ahsoka</h3>
+                    <p>Vader encounters his former Padawan, Ahsoka Tano, now a key figure in the nascent Rebel Alliance. Their emotional and fierce duel leaves both scarred. (Rebels series)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>Instruments of Terror: The Death Stars</h3>
+                    <p>Vader plays a crucial role in overseeing the construction and deployment of the Empire's ultimate weapons, the Death Star battle stations. (Episode III ending, Rogue One, Episode IV, Episode VI)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>Imperial Might: War Against the Rebellion</h3>
+                    <p>Vader becomes a feared symbol of Imperial power, leading military campaigns and covert operations against the growing Rebel Alliance. (Rogue One, Episode IV, Episode V, Episode VI)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>A New Hope, A Hidden Son: Discovery of Luke</h3>
+                    <p>Vader becomes aware of a Force-sensitive pilot involved in the Death Star's destruction, eventually learning this is his son, Luke Skywalker. (Comics, implied in Episode IV/V)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>The Revelation: "I am your father"</h3>
+                    <p>On Cloud City, Bespin, Vader duels Luke Skywalker, soundly defeating him and revealing the shocking truth of his parentage in an attempt to sway Luke to the dark side. (Episode V)</p>
+                </div>
+
+                <!-- Redemption and Death -->
+                <div class="timeline-event-vader">
+                    <h3>The Final Test: Luke's Surrender</h3>
+                    <p>Believing there is still good in his father, Luke Skywalker surrenders to Darth Vader aboard the second Death Star, hoping to reignite the conflict within him. (Episode VI)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>A Father's Conflict: Resisting the Emperor</h3>
+                    <p>Vader is visibly conflicted as Emperor Palpatine mercilessly tortures Luke with Force lightning, urging him to kill his father and take his place. (Episode VI)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>Return of the Jedi: Sacrifice and Redemption</h3>
+                    <p>Unable to watch his son die, Vader makes the ultimate sacrifice. He lifts the Emperor and hurls him into the Death Star's reactor core, absorbing fatal Force lightning himself. (Episode VI)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>Anakin's Peace: Death and Unmasking</h3>
+                    <p>A dying Anakin Skywalker asks Luke to remove his helmet, allowing him to look upon his son with his own eyes for the first and last time. He dies redeemed. (Episode VI)</p>
+                </div>
+                <div class="timeline-event-vader">
+                    <h3>One with the Force: Anakin's Spirit</h3>
+                    <p>Anakin Skywalker's Force spirit appears alongside those of Obi-Wan Kenobi and Yoda, watching over Luke during the Rebel victory celebration on Endor. (Episode VI)</p>
                 </div>
             </div>
         </section>
