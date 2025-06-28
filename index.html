@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darth Vader: Rise, Fall, Redemption</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 0;
+            background: linear-gradient(45deg, #ff0000, #8b0000);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.3);
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #ffff00, #ff0000, #00ff00);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .section {
+            margin: 80px 0;
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .rise {
+            background: linear-gradient(135deg, rgba(0, 100, 255, 0.1), rgba(0, 255, 255, 0.1));
+            border-color: #00bfff;
+        }
+
+        .fall {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(139, 0, 0, 0.1));
+            border-color: #ff0000;
+        }
+
+        .redemption {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(255, 255, 0, 0.1));
+            border-color: #00ff00;
+        }
+
+        .timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 280px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .timeline-item h3 {
+            margin-bottom: 10px;
+            color: #ff6b6b;
+        }
+
+        .timeline-item .details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .timeline-item:hover .details {
+            max-height: 200px;
+        }
+
+        .character-connections {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .character {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .character:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .character-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .transformation-sequence {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(90deg, #00bfff, #ff0000);
+            border-radius: 20px;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .transformation-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .transformation-sequence.active .transformation-slider {
+            width: 100%;
+        }
+
+        .scene-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .scene-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .scene-card:hover {
+            border-color: #ff0000;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .scene-card h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .comparison-side {
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .vader-side {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(139, 0, 0, 0.2));
+            border: 2px solid #ff0000;
+        }
+
+        .anakin-side {
+            background: linear-gradient(135deg, rgba(0, 100, 255, 0.2), rgba(0, 255, 255, 0.2));
+            border: 2px solid #00bfff;
+        }
+
+        .comparison-side:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
+        }
+
+        .trait-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .trait-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats-popup {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ff0000;
+            z-index: 1000;
+            display: none;
+            max-width: 300px;
+        }
+
+        .quote-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ff0000;
+            font-style: italic;
+            display: none;
+            z-index: 1000;
+            max-width: 250px;
+        }
+
+        .audio-trigger {
+            display: inline-block;
+            background: #ff0000;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .audio-trigger:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+        }
+
+        .final-scene {
+            text-align: center;
+            padding: 60px;
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(255, 255, 0, 0.1));
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 60px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .voting-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .vote-option {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .vote-option:hover {
+            border-color: #ff0000;
+            transform: translateY(-5px);
+        }
+
+        .vote-option.selected {
+            background: rgba(255, 0, 0, 0.2);
+            border-color: #ff0000;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-item {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>DARTH VADER</h1>
+            <p style="font-size: 1.5rem; margin-top: 10px;">Rise • Fall • Redemption</p>
+        </header>
+
+        <!-- Section 1: The Rise -->
+        <section class="section rise" id="rise">
+            <h2 class="section-title">THE RISE: Anakin Skywalker</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item" data-quote="Now this is podracing!">
+                    <h3>Podracing Victory</h3>
+                    <p>Young Anakin's first taste of glory</p>
+                    <div class="details">
+                        <p>At age 9, Anakin becomes the first human to win a podrace, showcasing his Force sensitivity and piloting skills. This victory leads to his freedom from slavery.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-quote="I will be the most powerful Jedi ever">
+                    <h3>Jedi Training</h3>
+                    <p>Obi-Wan takes Anakin as his Padawan</p>
+                    <div class="details">
+                        <p>Despite the Council's hesitation, Obi-Wan honors Qui-Gon's dying wish and trains Anakin, who shows unprecedented Force potential but struggles with attachment.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-quote="For the Republic!">
+                    <h3>Clone Wars Hero</h3>
+                    <p>The Hero With No Fear</p>
+                    <div class="details">
+                        <p>Anakin becomes a legendary general, leading Republic forces to countless victories. His unorthodox tactics and fierce loyalty make him a symbol of hope.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-quote="I love you">
+                    <h3>Secret Marriage</h3>
+                    <p>Forbidden love with Padmé</p>
+                    <div class="details">
+                        <p>Anakin secretly marries Padmé Amidala, violating the Jedi Code. This relationship becomes both his greatest joy and his path to darkness.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="character-connections">
+                <div class="character" data-quote="You were my brother, Anakin!">
+                    <div class="character-avatar">👨‍🦲</div>
+                    <h4>Obi-Wan Kenobi</h4>
+                    <p>Master & Brother</p>
+                </div>
+                <div class="character" data-quote="Ani, you'll always be that little boy">
+                    <div class="character-avatar">👸</div>
+                    <h4>Padmé Amidala</h4>
+                    <p>Forbidden Love</p>
+                </div>
+                <div class="character" data-quote="Train yourself to let go">
+                    <div class="character-avatar">🐸</div>
+                    <h4>Yoda</h4>
+                    <p>Wise Counselor</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: The Fall -->
+        <section class="section fall" id="fall">
+            <h2 class="section-title">THE FALL: Becoming Darth Vader</h2>
+            
+            <div class="transformation-sequence" id="transformationSeq">
+                <div class="transformation-slider">
+                    <div style="text-align: center;">
+                        <h3>The Transformation</h3>
+                        <p>Scroll to witness the fall to the dark side</p>
+                        <div class="audio-trigger" onclick="playAudio('vader-breathing')">🔊 Vader's Breathing</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scene-grid">
+                <div class="scene-card" data-quote="I have brought peace to my new Empire">
+                    <h3>Order 66</h3>
+                    <p>The Jedi Purge begins as Anakin leads the assault on the Jedi Temple, betraying his former allies and slaughtering younglings.</p>
+                </div>
+                
+                <div class="scene-card" data-quote="You underestimate my power!">
+                    <h3>Mustafar Duel</h3>
+                    <p>The climactic lightsaber battle with Obi-Wan ends with Anakin's defeat and severe injuries, completing his transformation.</p>
+                </div>
+                
+                <div class="scene-card" data-quote="She's lost the will to live">
+                    <h3>Padmé's Death</h3>
+                    <p>Padmé dies in childbirth, her broken heart unable to bear the loss of the man she loved to darkness.</p>
+                </div>
+                
+                <div class="scene-card" data-quote="Rise, Lord Vader">
+                    <h3>The Suit</h3>
+                    <p>Anakin's broken body is encased in the iconic black armor, and Darth Vader is truly born from the ashes of his former self.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <div class="audio-trigger" onclick="playAudio('no-sound')">🔊 "NOOOOO!"</div>
+                <div class="audio-trigger" onclick="playAudio('imperial-march')">🔊 Imperial March</div>
+            </div>
+        </section>
+
+        <!-- Section 3: Redemption -->
+        <section class="section redemption" id="redemption">
+            <h2 class="section-title">REDEMPTION: Return of the Jedi</h2>
+            
+            <div class="comparison-container">
+                <div class="comparison-side vader-side">
+                    <h3>Darth Vader</h3>
+                    <ul class="trait-list">
+                        <li>🗡️ Red lightsaber</li>
+                        <li>⚡ Force lightning resistance</li>
+                        <li>🏴 Serves the Empire</li>
+                        <li>😠 Anger and hatred</li>
+                        <li>🔒 Mechanical breathing</li>
+                        <li>👹 Intimidating presence</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-side anakin-side">
+                    <h3>Anakin Skywalker</h3>
+                    <ul class="trait-list">
+                        <li>⚔️ Blue lightsaber</li>
+                        <li>🌟 Exceptional pilot</li>
+                        <li>🏛️ Served the Republic</li>
+                        <li>❤️ Love and compassion</li>
+                        <li>🫁 Natural breathing</li>
+                        <li>😊 Charismatic hero</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="final-scene">
+                <h3>The Final Confrontation</h3>
+                <p style="margin: 20px 0; font-size: 1.2rem;">Luke's unwavering faith in his father's goodness ultimately redeems Anakin Skywalker</p>
+                
+                <div style="margin: 30px 0;">
+                    <div class="audio-trigger" onclick="playAudio('father-son')" data-quote="I am your father">🔊 "I am your father"</div>
+                    <div class="audio-trigger" onclick="playAudio('good-in-you')" data-quote="I know there's still good in you">🔊 "There's still good in you"</div>
+                    <div class="audio-trigger" onclick="playAudio('tell-your-sister')" data-quote="Tell your sister... you were right">🔊 "You were right about me"</div>
+                </div>
+                
+                <p style="font-style: italic; color: #ffff00;">"The good in you, the love in you, finally overcame the dark side."</p>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta-section">
+            <h2>Who is your favorite Star Wars redemption arc?</h2>
+            <div class="voting-options">
+                <div class="vote-option" onclick="vote('vader')">
+                    <h4>Darth Vader</h4>
+                    <p>The Chosen One's return</p>
+                    <span class="vote-count" id="vader-votes">0 votes</span>
+                </div>
+                <div class="vote-option" onclick="vote('kylo')">
+                    <h4>Kylo Ren</h4>
+                    <p>Ben Solo's sacrifice</p>
+                    <span class="vote-count" id="kylo-votes">0 votes</span>
+                </div>
+                <div class="vote-option" onclick="vote('revan')">
+                    <h4>Revan</h4>
+                    <p>Sith Lord to Jedi</p>
+                    <span class="vote-count" id="revan-votes">0 votes</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Tooltip for quotes -->
+    <div class="quote-tooltip" id="quoteTooltip"></div>
+    
+    <!-- Stats popup -->
+    <div class="stats-popup" id="statsPopup">
+        <h4>Character Stats</h4>
+        <div id="statsContent"></div>
+    </div>
+
+    <script>
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Section visibility
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Trigger transformation sequence
+                    if (entry.target.id === 'fall') {
+                        setTimeout(() => {
+                            document.getElementById('transformationSeq').classList.add('active');
+                        }, 500);
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Quote tooltips
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.dataset.quote) {
+                const tooltip = document.getElementById('quoteTooltip');
+                tooltip.innerHTML = `"${e.target.dataset.quote}"`;
+                tooltip.style.display = 'block';
+                tooltip.style.left = e.pageX + 10 + 'px';
+                tooltip.style.top = e.pageY + 10 + 'px';
+            }
+        });
+
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.dataset.quote) {
+                document.getElementById('quoteTooltip').style.display = 'none';
+            }
+        });
+
+        // Audio simulation
+        function playAudio(type) {
+            const messages = {
+                'vader-breathing': 'Playing Vader\'s iconic breathing sound...',
+                'no-sound': 'Playing Vader\'s anguished "NOOOOO!"...',
+                'imperial-march': 'Playing the Imperial March...',
+                'father-son': 'Playing "I am your father"...',
+                'good-in-you': 'Playing "I know there\'s still good in you"...',
+                'tell-your-sister': 'Playing "Tell your sister... you were right"...'
+            };
+            
+            alert(messages[type] || 'Audio clip playing...');
+        }
+
+        // Voting system
+        const votes = { vader: 0, kylo: 0, revan: 0 };
+        let userVote = null;
+
+        function vote(character) {
+            if (userVote) {
+                votes[userVote]--;
+                document.querySelector(`#${userVote}-votes`).textContent = `${votes[userVote]} votes`;
+                document.querySelector(`[onclick="vote('${userVote}')"]`).classList.remove('selected');
+            }
+            
+            votes[character]++;
+            userVote = character;
+            
+            document.querySelector(`#${character}-votes`).textContent = `${votes[character]} votes`;
+            document.querySelector(`[onclick="vote('${character}')"]`).classList.add('selected');
+        }
+
+        // Stats popup for characters
+        document.querySelectorAll('.character').forEach(char => {
+            char.addEventListener('mouseenter', (e) => {
+                const popup = document.getElementById('statsPopup');
+                const content = document.getElementById('statsContent');
+                
+                const stats = {
+                    'Obi-Wan Kenobi': 'Lightsaber: Blue<br>Force Powers: High<br>Speciality: Soresu Form',
+                    'Padmé Amidala': 'Role: Senator<br>Skills: Diplomacy<br>Weapon: Blaster',
+                    'Yoda': 'Lightsaber: Green<br>Force Powers: Master<br>Age: 900 years'
+                };
+                
+                const name = char.querySelector('h4').textContent;
+                content.innerHTML = stats[name] || 'Character information';
+                
+                popup.style.display = 'block';
+                popup.style.left = e.pageX + 10 + 'px';
+                popup.style.top = e.pageY + 10 + 'px';
+            });
+            
+            char.addEventListener('mouseleave', () => {
+                document.getElementById('statsPopup').style.display = 'none';
+            });
+        });
+
+        // Timeline hover effects
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateY(-10px) scale(1.05)';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Scene card click effects
+        document.querySelectorAll('.scene-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.style.animation = 'pulse 0.5s ease-in-out';
+                setTimeout(() => {
+                    card.style.animation = '';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
